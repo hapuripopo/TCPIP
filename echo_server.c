@@ -26,30 +26,30 @@ int main(int argc, char *argv[])
 	if(serv_sock==-1)
 		error_handling("socket() error");
 
-	memset(&serv_adr, 0, sizeof(serv_adr));
+	memset(&serv_adr, 0, sizeof(serv_adr));	// padding 0
 	serv_adr.sin_family = AF_INET;
-	serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
+	serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);	// INADDR -> TCPIP address
 	serv_adr.sin_port = htons(atoi(argv[1]));
 
-	if(bind(serv_sock, (struct sockaddr*)&serv_adr, sizeof(serv_adr))==-1)
+	if(bind(serv_sock, (struct sockaddr*)&serv_adr, sizeof(serv_adr))==-1)	// casting !!
 		error_handling("bind() error");
 
-	if(listen(serv_sock, 5)==-1)
+	if(listen(serv_sock, 5)==-1)	// able 5 host connected
 		error_handling("listen() error");
 
 	clnt_adr_sz = sizeof(clnt_adr);
 
 	for(i=0; i<5; i++)
 	{
-		clnt_sock=accept(serv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_sz);
+		clnt_sock=accept(serv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_sz);	// connect
 		if(clnt_sock==-1)
 			error_handling("accept() error");
 		else
 			printf("Connected client %d \n", i+1);
 
-		while((str_len = read(clnt_sock, message, BUF_SIZE))!=0)
+		while((str_len = read(clnt_sock, message, BUF_SIZE))!=0)	//connect socket diffrent with network socket !! In order to deviding client
 		{
-			write(clnt_sock, message, str_len);
+			write(clnt_sock, message, str_len);	// printing gotten message
 			message[str_len]=0;
 			printf("%s\n", message);
 		}

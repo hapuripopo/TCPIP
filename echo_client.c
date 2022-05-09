@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
 		fputs("Input message(Q to quit): ", stdout);
 		fgets(message, BUF_SIZE, stdin);
 
-		if(!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
+		if(!strcmp(message, "q\n") || !strcmp(message, "Q\n"))	// true is 1
 			break;
 		
-		write(sock, message, strlen(message));
+		write(sock, message, strlen(message));	// send message
 		str_len = read(sock, message, BUF_SIZE-1);
 		message[str_len]=0;
 		printf("Message from server: %s", message);
