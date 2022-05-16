@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 	if(bind(serv_sock, (struct sockaddr*)&serv_adr, sizeof(serv_adr))==-1)	// casting !!
 		error_handling("bind() error");
 
-	if(listen(serv_sock, 5)==-1)	// able 5 host connected
+	if(listen(serv_sock, 5)==-1)	// able to connect 5 host
 		error_handling("listen() error");
 
 	clnt_adr_sz = sizeof(clnt_adr);
@@ -47,7 +47,8 @@ int main(int argc, char *argv[])
 		else
 			printf("Connected client %d \n", i+1);
 
-		while((str_len = read(clnt_sock, message, BUF_SIZE))!=0)	//connect socket diffrent with network socket !! In order to deviding client
+		while((str_len = read(clnt_sock, message, BUF_SIZE))!=0)	//connect socket diffrent from network socket !! In order to deviding client
+//read() return 0 (server) when receive EOF (client) -> function end
 		{
 			write(clnt_sock, message, str_len);	// printing gotten message
 			message[str_len]=0;
