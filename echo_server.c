@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 		{
 			write(clnt_sock, message, str_len);	// printing gotten message
 			message[str_len]=0;
-			printf("%s\n", message);
+			printf("%s", message);
 		}
 
 		close(clnt_sock);
